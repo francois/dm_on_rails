@@ -64,4 +64,8 @@ Rails::Initializer.run do |config|
 
   # Activate observers that should always be running
   # config.active_record.observers = :cacher, :garbage_collector
+
+  # I use SQLite3 here, but if you need/want MySQL, replace sqlite3 with mysql
+  config.gem "do_sqlite3", :version => "0.9.6"
+  config.gem "dm-core", :version => "0.9.6"
 end
