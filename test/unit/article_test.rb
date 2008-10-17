@@ -5,4 +5,8 @@ class ArticleTest < ActiveSupport::TestCase
     article = Article.create(:title => "First Post", :body => "This is my first-ever post", :published_at => Time.now.utc)
     assert !article.new_record?
   end
+
+  def test_database_is_empty
+    assert Article.all.empty?
+  end
 end

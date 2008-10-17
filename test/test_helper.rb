@@ -55,6 +55,29 @@ class Test::Unit::TestCase
   # fixtures :all
 
   # Add more helper methods to be used by all tests here...
+  def logger
+    Rails.logger
+  end
+
+  def self.logger
+    Rails.logger
+  end
+
+  setup do
+    @__transaction = DataMapper::Transaction.new(DataMapper.repository(:default))
+    @__transaction.begin
+
+    # FIXME: Should I really be calling #push_transaction like that, or is there a better way?
+    DataMapper.repository(:default).adapter.push_transaction(@__transaction)
+  end
+
+  teardown do
+    if @__transaction
+      DataMapper.repository(:default).adapter.pop_transaction
+      @__transaction.rollback
+      @__transaction = nil
+    end
+  end
 end
 
 Dir[File.join(Rails.root, "app", "models", "*")].each {|f| require f}
