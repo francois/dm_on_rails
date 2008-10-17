@@ -56,3 +56,6 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
 end
+
+Dir[File.join(Rails.root, "app", "models", "*")].each {|f| require f}
+DataMapper.auto_migrate!
